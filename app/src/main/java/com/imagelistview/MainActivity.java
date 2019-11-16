@@ -12,6 +12,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,10 +23,8 @@ import com.imagelistview.getset.GetSet;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
     String imageTempName;
     String[] imageFor;
     Bitmap bitmap;
+    String encodedImage;
     // declaration and initialise ArrayList
     ArrayList<String>
             img_array = new ArrayList<String>();
@@ -67,6 +68,17 @@ public class MainActivity extends ActionBarActivity {
         }
         customImageAdapter = new CustomImageAdapter(getSets, MainActivity.this);
         listView.setAdapter(customImageAdapter);
+
+
+        Button button= (Button) findViewById(R.id.buttonl);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                for (int i=0; i<img_array.size(); i++){
+                    Log.i("img_array", "kirim data img  ke-"+(i+1)+"\n"+encodedImage);
+                }
+                Toast.makeText(MainActivity.this, "oooooo", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -96,8 +108,6 @@ public class MainActivity extends ActionBarActivity {
             String picturePath = getRealPathFromURI(tempUri);
             customImageAdapter.setImageInItem(position, bitmap, picturePath);
             getStringImage(bitmap);
-
-            Toast.makeText(this, Arrays.toString(imageFor), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,13 +147,16 @@ public class MainActivity extends ActionBarActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-       // img_array.add("f");
-        img_array.add("\n -----img----"+encodedImage);
-        String[] str = GetStringArray(img_array);
-        Log.i("img_array", "getStringImage: "+ Arrays.toString(str));
+        encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        img_array.add(encodedImage);
+
+       // img_array.add("\n -----img----"+encodedImage);
+      ////  String[] str = GetStringArray(img_array);
+       // Log.i("img_array", "getStringImage: "+ Arrays.toString(str));
         return encodedImage;
     }
+
+
 
     // Function to convert ArrayList<String> to String[]
     public static String[] GetStringArray(ArrayList<String> arr)
