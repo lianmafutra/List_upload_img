@@ -73,12 +73,23 @@ public class MainActivity extends ActionBarActivity {
         Button button= (Button) findViewById(R.id.buttonl);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i=0; i<img_array.size(); i++){
-                    Log.i("img_array", "kirim data img  ke-"+(i+1)+"\n"+encodedImage);
-                }
-                Toast.makeText(MainActivity.this, "oooooo", Toast.LENGTH_SHORT).show();
+               kirim_data();
             }
         });
+    }
+
+    private void kirim_data() {
+        try {
+            for (int i=0; i<img_array.size(); i++){
+                Log.i("img_array", "kirim data img  ke-"+(i+1)+"\n"+ img_array.get(i));
+            }
+            Toast.makeText(MainActivity.this, "Berhasil kirim data", Toast.LENGTH_SHORT).show();
+
+        }
+        catch (Exception e) {
+            Toast.makeText(MainActivity.this, "gagal kirim data", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
