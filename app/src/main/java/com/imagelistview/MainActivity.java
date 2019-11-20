@@ -73,8 +73,18 @@ public class MainActivity extends ActionBarActivity {
         Button button= (Button) findViewById(R.id.buttonl);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               kirim_data();
+                if (img_array.size()!=3) {
+                    Toast.makeText(MainActivity.this, "Data belum lengkap Jumlah data = " + img_array.size()+"/3", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    kirim_data();
+                }
+//                for (int i=0; i<img_array.size(); i++){
+//                    Log.i("img_array", "kirim data img  ke-"+(i+1)+"\n"+ img_array.get(i));
+//                }
+//               kirim_data();
             }
+
         });
     }
 
